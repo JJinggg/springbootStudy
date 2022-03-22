@@ -24,7 +24,8 @@ public class User {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GenericGenerator(name = "USER_GENERATOR", strategy = "uuid")
     @Column(name = COL_ID)
     private String id ="";
 
@@ -33,8 +34,6 @@ public class User {
 
     @Column(name = COL_EMAIL)
     private String email = "";
-
-    //@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 
     public String getId()
     {

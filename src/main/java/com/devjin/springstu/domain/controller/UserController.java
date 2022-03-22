@@ -36,12 +36,4 @@ public class UserController {
        return userService.initUser(_reqPostUser);
    }
 
-
-
-
-
-
-
-
-
 }

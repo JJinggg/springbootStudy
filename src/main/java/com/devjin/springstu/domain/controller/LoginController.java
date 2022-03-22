@@ -1,6 +1,7 @@
 package com.devjin.springstu.domain.controller;
 
 import com.devjin.springstu.domain.dto.request.ReqPostLogin;
+import com.devjin.springstu.domain.dto.response.ResLogin;
 import com.devjin.springstu.domain.dto.response.ResUser;
 import com.devjin.springstu.domain.dto.request.ReqPostUser;
 import com.devjin.springstu.domain.entity.User;
@@ -23,7 +24,7 @@ public class LoginController {
 
     @PostMapping
     @ResponseBody
-    public Map VerificationUser(@RequestBody @Valid ReqPostLogin _reqPostLogin)
+    public ResLogin VerificationUser(@RequestBody @Valid ReqPostLogin _reqPostLogin)
     {
         return loginService.getLoginResult(_reqPostLogin);
     }

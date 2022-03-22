@@ -7,9 +7,9 @@ public class ResLogin {
     private final boolean result;
 
 
-    public ResLogin()
+    public ResLogin(boolean _result)
     {
-        this.result = false;
+        this.result = _result;
     }
 
     public boolean getResult()

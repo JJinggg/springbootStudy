@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 
+import java.beans.beancontext.BeanContextServiceAvailableEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,6 @@ public class LoginService {
     public LoginService(UserRepository _userreqository)
     {
         this.userRepository = _userreqository;
-
     }
 
     @Transactional(readOnly = true)
@@ -43,12 +43,10 @@ public class LoginService {
         return true;
     }
 
-    public Map getLoginResult(ReqPostLogin _reqPostLogin)
+    public ResLogin getLoginResult(ReqPostLogin _reqPostLogin)
     {
-        Map result = new HashMap<String,Object>();
-        result.put("result",VaildUser(_reqPostLogin));
-
-        return result;
+        ResLogin resLogin = new ResLogin(VaildUser(_reqPostLogin));
+        return resLogin;
     }
 }
 

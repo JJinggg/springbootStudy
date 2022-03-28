@@ -3,11 +3,12 @@ package com.devjin.springstu.domain.service;
 import com.devjin.springstu.domain.dto.request.ReqPostLogin;
 import com.devjin.springstu.domain.dto.response.ResLogin;
 import com.devjin.springstu.domain.dto.response.ResUser;
+import com.devjin.springstu.domain.entity.User;
 import com.devjin.springstu.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class LoginService {
@@ -19,17 +20,16 @@ public class LoginService {
     }
 
     @Transactional(readOnly = true)
-    private List<ResUser> getUser()
+    private User getUserRep(String _id)
     {
-        return userRepository.findAll().stream().map(ResUser::new).collect(Collectors.toList());
+        return userRepository.findById(_id).orElse(null);
     }
 
     public boolean VaildUser(String _id,String _pwd)
     {
-        List<ResUser> _user = getUser();
-        if (_user.stream().filter(x ->x.getId().equals(_id)).count()<=0
-        ||  _user.stream().filter(x ->x.getPwd().equals(_pwd)).count()<=0) return false;
-        return true;
+        User _userRep = getUserRep(_id);
+        if(_userRep!=null&& _userRep.getPwd().equals(_pwd)) return true;
+        return false;
     }
 
     public ResLogin getLoginResult(ReqPostLogin _reqPostLogin)

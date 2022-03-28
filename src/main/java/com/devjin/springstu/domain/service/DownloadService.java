@@ -2,6 +2,7 @@ package com.devjin.springstu.domain.service;
 import com.devjin.springstu.domain.dto.request.ReqPostDownload;
 import com.devjin.springstu.domain.dto.response.ResDownload;
 import com.devjin.springstu.domain.dto.response.ResUser;
+import com.devjin.springstu.domain.entity.User;
 import com.devjin.springstu.domain.repository.UserRepository;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
@@ -22,16 +23,18 @@ public class DownloadService {
         this.userRepository = _userRepository;
     }
     @Transactional(readOnly = true)
-    private List<ResUser> getUser()
+    private User getUser(String _id)
     {
-        return userRepository.findAll().stream().map(ResUser::new).collect(Collectors.toList());
+        return userRepository.findById(_id).orElse(null);
     }
 
     private HttpServletResponse downloadFile(HttpServletResponse response, String _id) throws IOException
     {
-        List<ResUser> list = getUser();
+        User user=getUser(_id);
 
-        String version = list.stream().filter(x -> x.getId().equals(_id)).findFirst().orElse(null).getVersion();
+        if(user==null)return response;
+
+        String version = user.getVersion();
         String path = "/Users/kimjinyoung/TestFolder/"+version+"/TIMSIM.exe";
         byte[] fileByte = FileUtils.readFileToByteArray(new File(path));
         response.setContentType("application/octet-stream");

@@ -4,14 +4,10 @@ import com.devjin.springstu.domain.dto.request.ReqPostUser;
 import com.devjin.springstu.domain.dto.response.ResUser;
 import com.devjin.springstu.domain.entity.User;
 import com.devjin.springstu.domain.repository.UserRepository;
-import org.apache.juli.logging.Log;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
@@ -19,8 +15,6 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
-
-
 
     public UserService(UserRepository _userRepository)
     {
@@ -33,10 +27,10 @@ public class UserService {
                 .map(ResUser::new).collect(Collectors.toList());
     }
     @Transactional
-    public List<ResUser> initUser(ReqPostUser _reqPostUser)
+    public User initUser(ReqPostUser _reqPostUser)
     {
         userRepository.save(_reqPostUser.toEntity());
-        return this.getUser();
+        return _reqPostUser.toEntity();
     }
 
 }
